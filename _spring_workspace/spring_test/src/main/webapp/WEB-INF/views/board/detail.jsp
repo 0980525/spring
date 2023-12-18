@@ -27,8 +27,9 @@
 			<input type="text" name="reg_date" class="form-control" id="reg_date" value="${bvo.reg_date }" readonly="readonly">
 		</div>
 		<!-- <span class="badge text-bg-primary">Primary</span> --><!-- 배지 -->
-		<a href="/board/list"><button type="button">list</button></a>
-		<a href="/board/modify"><button type="buttom">modify</button></a>
+		<a href="/board/list"><button type="button" class="btn btn-primary">list</button></a>
+		<a href="/board/modify?bno=${bvo.bno }"><button type="button" class="btn btn-success">modify</button></a>
+		<a href="/board/remove?bno=${bvo.bno }"><button type="button" class="btn btn-danger">remove</button></a>
 	
 <%-- <table class="table">
 	<tr>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.www.domain.BoardVO;
 import com.ezen.www.service.BoardService;
@@ -52,17 +53,37 @@ public class BoardController {
 	}
 	
 	@GetMapping({"/detail","/modify"})
-	public void detail(Model m,@RequestParam("bno")int bno) {
-		log.info(">>>>> bno >>",bno);
+	public void detail(Model m,@RequestParam("bno") int bno) {
+		log.info(">>>>> bno >>"+bno);
 		m.addAttribute("bvo",bsv.getDetail(bno));
 	}
+	
 	@PostMapping("/modify")
 	public String modify(BoardVO bvo) {
 		log.info(">>>>> bvo >>",bvo);
 		//update
+		bsv.update(bvo);
+		return "redirect:/board/detail?bno="+bvo.getBno();
 		
-		return "redirect:/board/detail";
-		
+	}
+	/* 모델 m가져와서 addAttribute 하는 버전
+	 * public String modify(BoardVO bvo,Model m) 
+	 * { log.info(">>>>> bvo >>",bvo); //update
+	 * bsv.update(bvo); 
+	 * m.addAttribute("bno",bvo.getBno());
+	 * return "redirect:/board/detail?bno="+bvo.getBno();
+	 * }
+	 */	
+	@GetMapping("/remove")
+	public String remove(@RequestParam("bno") int bno,RedirectAttributes re) {
+		log.info(">>>>> bno >>",bno);
+		int isOk = bsv.remove(bno);
+		//isOk 현재의 상태 알려줌 - 페이지가 새로고침 될때 남아있을 필요가 없는 데이터
+		//리다이렉트될 때 데이터를 한번만 보내는 객체 (RedirectAttribute)
+		//Model객체는 저장되고 컨트롤러의 list로 감 
+		//RedirectAttribute의 addFlashAttribute는 일회성으로 데이터(isOk)를 (list.jsp로) 보낼때 사용
+		re.addFlashAttribute("isDel",isOk);
+		return "redirect:/board/list";
 	}
 	
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,11 +30,24 @@
           <a class="nav-link" href="/board/list">게시판 보기</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">회원가입</a>
+          <a class="nav-link" href="/member/register">회원가입</a>
         </li>
+      <c:if test="${ses.id eq null }">
         <li class="nav-item">
-          <a class="nav-link" href="#">로그인</a>
+          <a class="nav-link" href="/member/login">로그인</a>
         </li>
+      </c:if>
+      <c:if test="${ses.id ne null }">
+        <li class="nav-item">
+          <a class="nav-link" href="/member/logout">로그아웃</a>
+        </li>
+      </c:if>
+      <c:if test="${ses.id ne null }">
+        <li class="nav-item">
+          <a class="nav-link" href="/member/modify">${ses.id }(${ses.email}) welcome</a>
+        </li>
+      </c:if>
+        
      </ul>
     </div>
   </div>

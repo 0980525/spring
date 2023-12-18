@@ -19,4 +19,20 @@
  	 <update id="readCntUpdate">
  	 	update board set read_count = read_count+1 where bno= #{bno}
  	 </update>
+ 	 <update id="update">
+ 	 	update board set 
+ 	 	title=#{title},
+ 	 	content=#{content},
+ 	 	reg_date=now(),
+ 	 	read_count=read_count-2
+ 	 	where bno=#{bno}
+ 	 </update>
+ 	 <!-- isDel 을 사용하지 않고 게시글을 삭제함
+ 	 <delete id="delete">
+ 	 	delete from board where bno=#{bno}
+ 	 </delete> -->
+ 	 <!-- isDel을 사용해서 게시글이 보이지 않지만 isDel="Y"인 형태로 db에 남아있음 -->
+ 	 <update id="delete">
+ 	 	update board set isDel="Y" where bno=#{bno}
+ 	 </update>
   </mapper>

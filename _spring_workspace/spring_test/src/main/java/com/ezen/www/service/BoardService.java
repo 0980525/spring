@@ -12,6 +12,11 @@ public interface BoardService {
 
 	Object getDetail(int bno);
 
+	void update(BoardVO bvo);
+
+	int remove(int bno);
+
+
 
 
 
