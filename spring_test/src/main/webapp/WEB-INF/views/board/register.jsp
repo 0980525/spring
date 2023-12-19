@@ -23,7 +23,7 @@
 			<label for="content" class="form-label">Content</label>
 			<textarea name="content" class="form-control" id="content" rows="3"></textarea>
 		</div>
-		<button type="submit" class="btn btn-primar">Register</button>
+		<button type="submit" class="btn btn-primary">Register</button>
 	</form>
 </div>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
