@@ -30,36 +30,47 @@
 		<a href="/board/list"><button type="button" class="btn btn-primary">list</button></a>
 		<a href="/board/modify?bno=${bvo.bno }"><button type="button" class="btn btn-success">modify</button></a>
 		<a href="/board/remove?bno=${bvo.bno }"><button type="button" class="btn btn-danger">remove</button></a>
+	<br>
+	<br>
+	<hr>
 	
-<%-- <table class="table">
-	<tr>
-		<th>글 번호</th>
-		<td>${ bvo.bno}</td>
-	</tr>
-	<tr>
-		<th>제목</th>
-		<td>${ bvo.title}</td>
-	</tr>
-	<tr>
-		<th>작성자</th>
-		<td>${ bvo.writer}</td>
-	</tr>
-	<tr>
-		<th>내용</th>
-		<td>${ bvo.content}</td>
-	</tr>
-	<tr>
-		<th>reg_date</th>
-		<td>${ bvo.reg_date}</td>
-	</tr>
-	<tr>
-		<th>read_count</th>
-		<td>${ bvo.read_count}</td>
-	</tr>
-
-
-</table> --%>
+	<!-- 댓글 등록 라인 -->
+	
+	<div class="input-group mb-3">
+	
+		<span id="cmtWriter"class="input-group-text">${ses.id }</span>
+		<input type="text" id="cmtText"class="form-control" placeholder="ADD Comment..">
+		<button type="button" id="cmtAddBtn" class="btn btn-outline-secondary">댓글 등록</button>
+		<!-- dataset / c:out 으로 bno받아오기  -->
+		
+	</div>	
+	
+	<hr>
+	
+	<!-- 댓글 표시 라인 -->
+		<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        no. cno,writer,reg_date
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>ADD Comment..</strong> 
+      </div>
+    </div>
+  </div>
+  
+  
 </div>
+	</div>
+	<script type="text/javascript">
+	const bnoVal = `<c:out value="${bvo.bno}"/>`
+</script>
+<script src="/resources/js/boardComment.js"></script>
+
+<br>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
      

@@ -13,6 +13,7 @@
  	 	select * from board 
  	 	where 
  	 	isDel = 'N' 
+ 	 	<include refid="search"></include>
  	 	order by bno desc 
  	 	limit #{pageStart},#{qty}
  	 </select>
@@ -38,7 +39,8 @@
  	 <!-- isDel 을 사용하지 않고 게시글을 삭제함
  	 <delete id="delete">
  	 	delete from board where bno=#{bno}
- 	 </delete> -->
+ 	 </delete> 
+ 	 -->
  	 <!-- isDel을 사용해서 게시글이 보이지 않지만 isDel="Y"인 형태로 db에 남아있음 -->
  	 <update id="delete">
  	 	update board set isDel="Y" where bno=#{bno}
@@ -47,5 +49,32 @@
  	 <select id="getTotalCount" resultType="int">
  	 	select count(bno) from board 
  	 	where isDel="N"
+ 	 	<include refid="search"></include>
  	 </select>
+ 	 
+ 	 <!-- select * from board where isDel='N' and (or..or..or(prefixOverrides 로 뭔가 지움)) -->
+ 	 <!-- 옵션에서 "tw"등의 타입을 배열에서 검색을 하기위해 foreach사용 -->
+	 <!-- <when test="type=='t'.toString()-'t'를 문자열로 인식하기 위해 toString"></when> -->
+ 	 <sql id="search">
+ 	 	<if test="type != null">
+ 	 		<trim prefix="and (" suffix=")" prefixOverrides="or">
+ 	 			<foreach collection="typeToArray" item="type">
+ 	 				<trim prefix="or">
+ 	 					<choose>
+ 	 						<when test="type=='t'.toString()">
+ 	 							title like concat('%',#{keyword},'%')
+ 	 						</when>
+ 	 						<when test="type=='w'.toString">
+ 	 							writer like concat('%',#{keyword},'%')
+ 	 						</when>
+ 	 						<when test="type=='c'.toString">
+ 	 							content like concat('%',#{keyword},'%')
+ 	 						</when>
+ 	 					</choose>
+ 	 				</trim>
+ 	 			</foreach>
+ 	 		</trim>
+ 	 	</if>
+ 	 </sql>
+ 	 
   </mapper>

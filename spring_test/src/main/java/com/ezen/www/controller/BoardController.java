@@ -49,12 +49,14 @@ public class BoardController {
 	// 리턴타입 void여도 상관없음
 	@GetMapping("/list") 
 	public String list(Model m,PagingVO pgvo) {
-		log.info(">>>> pgvo >> {}",pgvo);
+		log.info(">>>> pgvo >> {}",pgvo);//pageNo,qty,type,keyword
+		
 		//리턴타입은 목적지 경로에 대한 타입 destpage가 리턴이라고 생각
 		//Model 객체 => setAttribute (jsp..등 으로 보내는)역할을 하는 객체  
 		m.addAttribute("list", bsv.getList(pgvo));
+		
 		//ph 객체 다시 생성 (pgvo, totalCount 생성해야함)
-		int totalCount = bsv.getTotalCount();
+		int totalCount = bsv.getTotalCount(pgvo);
 		PagingHandler ph = new PagingHandler(pgvo, totalCount);
 		m.addAttribute("ph",ph);
 		return "/board/list"; //views-board-list.jsp
