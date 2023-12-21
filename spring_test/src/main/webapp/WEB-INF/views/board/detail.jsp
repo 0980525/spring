@@ -69,7 +69,9 @@
 	const bnoVal = `<c:out value="${bvo.bno}"/>`
 </script>
 <script src="/resources/js/boardComment.js"></script>
-
+<script type="text/javascript">
+spreadCommentList(bnoVal);
+</script>
 <br>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
