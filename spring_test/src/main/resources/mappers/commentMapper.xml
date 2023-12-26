@@ -20,7 +20,8 @@
   
   <update id="update">
   	update comment set
-  	content = #{content}
+  	content = #{content},
+  	reg_date = now()
   	where cno=#{cno} 
   </update>
   </mapper>

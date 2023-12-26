@@ -57,6 +57,7 @@ public class CommentController {
 		return  isOk > 0 ? new ResponseEntity<String>("1",HttpStatus.OK):
 			new ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+		
 	@PutMapping(value="/modify",consumes = "application/json", produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> modify(@RequestBody CommentVO cno){
 		log.info(">>>> cno >> {}"+cno);
@@ -65,6 +66,15 @@ public class CommentController {
 			new ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
 		
 		
+		/* putMapping :consumes,produces (들어오는 값,나가는 값이 명확할때 타입 생략 가능)
+		 * @PutMapping("/modify")
+		 * public ResponseEntity<String> modify(@RequestBody
+		 * CommentVO cvo){ log.info(">>>> cvo >> {}"+cvo); 
+		 * int isOk = csv.modify(cvo);
+		 * return isOk > 0 ? new ResponseEntity<String>("1",HttpStatus.OK): new
+		 * ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
+		 */
+			
 	}
 	
 	

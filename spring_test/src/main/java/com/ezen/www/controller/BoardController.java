@@ -1,5 +1,7 @@
 package com.ezen.www.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -8,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.www.Handler.FileHandler;
 import com.ezen.www.Handler.PagingHandler;
 import com.ezen.www.domain.BoardVO;
+import com.ezen.www.domain.FileVO;
 import com.ezen.www.domain.PagingVO;
 import com.ezen.www.service.BoardService;
 
@@ -26,16 +31,37 @@ public class BoardController {
 	@Inject
 	private BoardService bsv;
 	
+	@Inject
+	private FileHandler fhd;
+	
 	//경로와 리턴의 값이 같을 경우 생략 가능 (값이 옴)/board/register => /board/register
 	//각각의 mapping처리
 	@GetMapping("/register")
 	public void register() {}
 	
+	/*public String register(@RequestParam("name")String name BoardVO bvo) 
+	 * @RequestParam("name") : id로 요청..?
+	 * String name BoardVO bvo:파라미터 받을 때 필요
+	 * required - 필수 여부 (false) : 파라미터가 없어도 예외가 발생하지 않음
+	 * */
 	@PostMapping("/register")
-		public String register(BoardVO bvo) {
-		/*public String register(@RequestParam("name")String name BoardVO bvo) :파라미터 받을 때 */
+		public String register(BoardVO bvo,@RequestParam(name="files",required = false)MultipartFile[]files) {
 		
+		log.info(">>> files >> {}",files.toString()); //주소 값이 나옴
 		log.info(">>> bvo >> {}",bvo);
+		
+		//파일 핸들러 처리 
+		List<FileVO> flist = null;
+		
+		//파일이 있을 경우(files[0].getSize() > 0 )만 fhd를 호출
+		if(files[0].getSize() > 0) {
+			flist = fhd.uploadFiles(files);
+		}
+		
+		
+		
+		
+		
 		int isOk = bsv.register(bvo);
 		//목적지 경로 
 		return "redirect:/board/list"; //리턴타입 지정하지 않으면 service에서 void
