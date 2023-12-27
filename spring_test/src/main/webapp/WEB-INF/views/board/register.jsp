@@ -41,4 +41,5 @@
 	</form>
 </div>
 <script src="/resources/js/boardRegister.js"></script>
+
 <jsp:include page="../layout/footer.jsp"></jsp:include>

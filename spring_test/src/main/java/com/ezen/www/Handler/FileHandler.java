@@ -75,7 +75,7 @@ public class FileHandler {
 			
 			//디스크에 저장할 파일 객체를 생성 ->w저장
 			//uuid_fileName / uuid_th_fileName
-			String fullFileName = uuidStr+"-"+onlyFileName;
+			String fullFileName = uuidStr+"_"+onlyFileName;
 			File storeFile = new File(folders,fullFileName);
 			
 			//저장=>폴더가 없거나ㅡ 저장파일이 없다면 io Exception

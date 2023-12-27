@@ -52,6 +52,11 @@
  	 	<include refid="search"></include>
  	 </select>
  	 
+ 	 <select id="selectBno" resultType="int">
+ 	 	select max(bno)from board
+ 	 	<!-- select bno from board order by bno desc limit 0 -->
+ 	 </select>
+ 	 
  	 <!-- select * from board where isDel='N' and (or..or..or(prefixOverrides 로 뭔가 지움)) -->
  	 <!-- 옵션에서 "tw"등의 타입을 배열에서 검색을 하기위해 foreach사용 -->
 	 <!-- <when test="type=='t'.toString()-'t'를 문자열로 인식하기 위해 toString"></when> -->

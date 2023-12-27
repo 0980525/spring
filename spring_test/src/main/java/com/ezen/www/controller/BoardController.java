@@ -4,9 +4,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.www.Handler.FileHandler;
 import com.ezen.www.Handler.PagingHandler;
+import com.ezen.www.domain.BoardDTO;
 import com.ezen.www.domain.BoardVO;
 import com.ezen.www.domain.FileVO;
 import com.ezen.www.domain.PagingVO;
@@ -56,13 +62,17 @@ public class BoardController {
 		//파일이 있을 경우(files[0].getSize() > 0 )만 fhd를 호출
 		if(files[0].getSize() > 0) {
 			flist = fhd.uploadFiles(files);
+			log.info(">>>>>flist >>> {}",flist);
+		}else {
+			log.info("file null");
 		}
 		
+		BoardDTO bdto= new BoardDTO(bvo,flist);
 		
 		
+		int isOk = bsv.register(bdto);
+		log.info(">>> board register >>>",isOk > 0? "OK":"FAIL");
 		
-		
-		int isOk = bsv.register(bvo);
 		//목적지 경로 
 		return "redirect:/board/list"; //리턴타입 지정하지 않으면 service에서 void
 		/*
@@ -91,12 +101,14 @@ public class BoardController {
 	@GetMapping({"/detail","/modify"})
 	public void detail(Model m,@RequestParam("bno") int bno) {
 		log.info(">>>>> bno >>"+bno);
-		m.addAttribute("bvo",bsv.getDetail(bno));
+		//파일 내용을 포함해서 같이 보내기
+		m.addAttribute("boardDTO",bsv.getDetail(bno));
 	}
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO bvo) {
 		log.info(">>>>> bvo >>",bvo);
+		
 		//update
 		bsv.update(bvo);
 		return "redirect:/board/detail?bno="+bvo.getBno();
@@ -122,5 +134,13 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	@DeleteMapping(value="/{uuid}",produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> remove(@PathVariable("uuid")String uuid){
+		log.info(">>>> uuid >> {}"+uuid);
+		return null;
+		
+//		return  isOk > 0 ? new ResponseEntity<String>("1",HttpStatus.OK):
+//			new ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 }
