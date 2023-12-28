@@ -63,6 +63,8 @@ public class BoardController {
 		if(files[0].getSize() > 0) {
 			flist = fhd.uploadFiles(files);
 			log.info(">>>>>flist >>> {}",flist);
+			//파일 등록 전에 파일 개수를 bvo fileCount에 직접 set
+			bvo.setFileCount(flist.size());
 		}else {
 			log.info("file null");
 		}
@@ -91,12 +93,17 @@ public class BoardController {
 		//Model 객체 => setAttribute (jsp..등 으로 보내는)역할을 하는 객체  
 		m.addAttribute("list", bsv.getList(pgvo));
 		
-		//ph 객체 다시 생성 (pgvo, totalCount 생성해야함)
+		//ph 객체 다시 생성 
 		int totalCount = bsv.getTotalCount(pgvo);
+		
 		PagingHandler ph = new PagingHandler(pgvo, totalCount);
 		m.addAttribute("ph",ph);
+		
 		return "/board/list"; //views-board-list.jsp
 	}
+	
+	
+	
 	
 	@GetMapping({"/detail","/modify"})
 	public void detail(Model m,@RequestParam("bno") int bno) {
@@ -106,11 +113,15 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO bvo) {
+	public String modify(BoardVO bvo,@RequestParam(name="files",required = false)MultipartFile[]files) {
 		log.info(">>>>> bvo >>",bvo);
-		
+		List<FileVO> flist = null;
+		if(files[0].getSize()>0) {
+			flist = fhd.uploadFiles(files);
+		}
+		BoardDTO boardDTO = new BoardDTO(bvo,flist);
 		//update
-		bsv.update(bvo);
+		bsv.update(boardDTO);
 		return "redirect:/board/detail?bno="+bvo.getBno();
 		
 	}
@@ -134,13 +145,12 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@DeleteMapping(value="/{uuid}",produces = MediaType.TEXT_PLAIN_VALUE)
+	@DeleteMapping(value="/file/{uuid}",produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> remove(@PathVariable("uuid")String uuid){
 		log.info(">>>> uuid >> {}"+uuid);
-		return null;
-		
-//		return  isOk > 0 ? new ResponseEntity<String>("1",HttpStatus.OK):
-//			new ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
+		int isOk = bsv.removeFile(uuid);
+		return isOk > 0? new ResponseEntity<String>("1",HttpStatus.OK):
+			new ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

@@ -11,6 +11,7 @@ import com.ezen.www.domain.BoardVO;
 import com.ezen.www.domain.FileVO;
 import com.ezen.www.domain.PagingVO;
 import com.ezen.www.repository.BoardDAO;
+import com.ezen.www.repository.CommentDAO;
 import com.ezen.www.repository.FileDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,9 @@ public class BoardServiceImpl implements BoardService{
 
 	@Inject
 	private BoardDAO bdao;
+	
+	@Inject
+	private CommentDAO cdao;
 	
 	@Inject
 	private FileDAO fdao;
@@ -56,6 +60,9 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> getList(PagingVO pgvo) {
 		log.info("list service impl");
+		 bdao.updateCommentCount();
+		 bdao.updateFileCount();
+		
 		return bdao.selectList(pgvo);
 	}
 
@@ -72,9 +79,21 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void update(BoardVO bvo) {
+	public int update(BoardDTO bdto) {
 		log.info("modify service impl");
-		bdao.update(bvo);
+		int isOk = bdao.update(bdto.getBvo());
+		if(bdto.getFlist() == null) {
+			isOk *= 1;
+		}else {
+			if(isOk > 0 && bdto.getFlist().size() > 0) {
+				int bno = bdto.getBvo().getBno();
+				for(FileVO fvo : bdto.getFlist()) {
+					fvo.setBno(bno);
+					isOk *= fdao.insertFile(fvo);
+				}
+			}
+		}
+		return isOk;
 	}
 
 	@Override
@@ -88,6 +107,16 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return bdao.getTotalCount(pgvo);
 	}
+
+	@Override
+	public int removeFile(String uuid) {
+		// TODO Auto-generated method stub
+		return fdao.removeFile(uuid);
+	}
+
+
+	
+
 
 	
 	

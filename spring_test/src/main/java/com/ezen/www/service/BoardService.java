@@ -14,11 +14,16 @@ public interface BoardService {
 
 	BoardDTO getDetail(int bno);
 
-	void update(BoardVO bvo);
+	int update(BoardDTO boardDTO);
 
 	int remove(int bno);
 
 	int getTotalCount(PagingVO pgvo);
+
+	int removeFile(String uuid);
+
+
+	
 
 
 

@@ -8,7 +8,7 @@
 <div class="container-md">
 <h1>Board Modify Page</h1>
 <c:set value="${boardDTO.bvo }" var="bvo" />
-<form action="/board/modify" method="post">
+<form action="/board/modify" method="post" enctype="multipart/form-data">
 	<br>
 	<div class="mb-3">
 			<label for="bno" class="form-label">Bno</label> 
@@ -57,7 +57,7 @@
 						${fvo.reg_date }
 					</div>
 					<span class="badge text-bg-warning">${fvo.file_size }Byte</span>
-					<button type="button" data-uuid="${fvo.uuid } class="file-x delBtn" id="xBtn">X</button>
+					<button type="button" data-uuid="${fvo.uuid }" class="file-x">X</button>
 					<hr>
 				</li> 
 			</c:forEach>
@@ -91,5 +91,6 @@
 		</div>
 		
 		<script src="/resources/js/boardModify.js"></script>
+		<script src="/resources/js/boardRegister.js"></script>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 		

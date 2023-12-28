@@ -2,6 +2,7 @@ package com.ezen.www.repository;
 
 import java.util.List;
 
+import com.ezen.www.domain.BoardDTO;
 import com.ezen.www.domain.BoardVO;
 import com.ezen.www.domain.PagingVO;
 
@@ -15,13 +16,18 @@ public interface BoardDAO {
 
 	void readCntUpdate(int bno);
 
-	void update(BoardVO bvo);
+	int update(BoardVO bvo);
 
 	int delete(int bno);
 
 	int getTotalCount(PagingVO pgvo);
 
 	int selectBno();
+
+	int updateCommentCount();
+
+	int updateFileCount();
+
 
 	
 

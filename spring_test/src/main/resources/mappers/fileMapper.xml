@@ -13,4 +13,10 @@
   <select id="getFileList" resultType="com.ezen.www.domain.FileVO">
   	select * from file where bno =#{bno}
   </select>
+  
+  <delete id="removeFile">
+  	delete from file where uuid = #{uuid}
+  </delete>
+  
+
   </mapper>

@@ -24,4 +24,6 @@
   	reg_date = now()
   	where cno=#{cno} 
   </update>
+  
+ 
   </mapper>

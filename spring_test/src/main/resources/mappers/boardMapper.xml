@@ -5,8 +5,8 @@
   <mapper namespace="com.ezen.www.repository.BoardDAO">
   
  	 <insert id="insert" parameterType="com.ezen.www.domain.BoardVO"> 
- 	 	insert into board(title,writer,content) 
- 	 	values(#{title},#{writer},#{content})
+ 	 	insert into board(title,writer,content,fileCount) 
+ 	 	values(#{title},#{writer},#{content},#{fileCount})
  	 </insert>
  	 
  	 <select id="selectList" resultType="com.ezen.www.domain.BoardVO">
@@ -57,6 +57,17 @@
  	 	<!-- select bno from board order by bno desc limit 0 -->
  	 </select>
  	 
+ 	 <update id="updateCommentCount">
+ 	 	update board b set commentCount =
+ 	 	(select count(bno) from comment where bno=b.bno)
+ 	 </update>
+ 	 
+ <!-- updatecommentCount랑 같은 방식으로 했던거 -->
+ 	<update id="updateFileCount">
+ 	 	update board b set fileCount = 
+ 	 	(select count(bno) from file where bno = b.bno)
+ 	 </update>
+ 	  
  	 <!-- select * from board where isDel='N' and (or..or..or(prefixOverrides 로 뭔가 지움)) -->
  	 <!-- 옵션에서 "tw"등의 타입을 배열에서 검색을 하기위해 foreach사용 -->
 	 <!-- <when test="type=='t'.toString()-'t'를 문자열로 인식하기 위해 toString"></when> -->
