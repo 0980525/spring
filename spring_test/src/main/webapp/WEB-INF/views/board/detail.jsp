@@ -75,7 +75,9 @@
 		
 		<!-- <span class="badge text-bg-primary">Primary</span> --><!-- 배지 -->
 		<a href="/board/list"><button type="button" class="btn btn-primary">list</button></a>
+		<c:if test="${ses.id ne null }">
 		<a href="/board/modify?bno=${bvo.bno }"><button type="button" class="btn btn-success">modify</button></a>
+		</c:if>
 		<a href="/board/remove?bno=${bvo.bno }"><button type="button" class="btn btn-danger">remove</button></a>
 	<br>
 	<br>

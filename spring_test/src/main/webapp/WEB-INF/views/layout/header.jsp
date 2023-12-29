@@ -22,10 +22,12 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        <c:if test="${ses.id ne null }">
         <li class="nav-item">
           <a class="nav-link" href="/board/register">게시판 글쓰기</a>
           <!-- 컨트롤러로 가는 경로 -->
         </li>
+        </c:if>
         <li class="nav-item">
           <a class="nav-link" href="/board/list">게시판 보기</a>
         </li>
