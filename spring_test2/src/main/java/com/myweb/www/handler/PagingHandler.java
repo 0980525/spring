@@ -1,10 +1,13 @@
 package com.myweb.www.handler;
 
+import java.util.List;
+
+import com.myweb.www.domain.CommentVO;
 import com.myweb.www.domain.PagingVO;
 
 import lombok.Getter;
-import lombok.ToString;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -22,6 +25,8 @@ public class PagingHandler {
 	
 	//매개변수로 전달 
 	private PagingVO pgvo;
+	
+	private List<CommentVO> cmtList;
 	
 	//생성자에서 모든 값들이 설정되어야 함
 	public PagingHandler(PagingVO pgvo,int totalCount) {
@@ -43,6 +48,11 @@ public class PagingHandler {
 		
 		this.prev = this.startPage > 1;
 		this.next = this.endPage < realEndPage;
+	}
+	
+	public PagingHandler(PagingVO pgvo,int totalCount, List<CommentVO> cmtList) {
+		this(pgvo, totalCount);
+		this.cmtList = cmtList;
 	}
 	
 	

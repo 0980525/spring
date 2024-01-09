@@ -4,7 +4,6 @@
     
 <jsp:include page="../layout/header.jsp"/>
 <jsp:include page="../layout/nav.jsp"/>
-
 	<div class="container-md">
 		<div class="mb-3">
 			<label for="bno" class="form-label">Bno</label> 
@@ -42,7 +41,7 @@
 		
 		<!-- 댓글 표시라인 -->
 		
-		<ul class="list-group list-group-flush">
+		<ul class="list-group list-group-flush" id="cmtListArea">
 			<li class="list-group-item">
 				<div class="mb-3">
 					<div class="fw-bold">Writer</div>
@@ -52,6 +51,31 @@
 			</li>
 		</ul>
 		
+		<!-- 더보기 -->
+		<div>
+			<button type="button" id="moreBtn" data-page="1" class="btn btn-outline-dark" style="visibility:hidden ">More +</button>
+		</div>
+		
+		<!-- 모달창 라인 -->
+		<div class="modal" id="myModal" tabindex="-1">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Writer</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="input-group mb-3">
+		        	<input type="text" class="form-control" id="cmtTextMod">
+			        <button type="button" class="btn btn-primary" id="cmtModBtn">Post</button>
+			    </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		
 	</div>
 
