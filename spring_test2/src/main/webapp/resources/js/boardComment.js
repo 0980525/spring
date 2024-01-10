@@ -75,7 +75,7 @@ function spreadCommentList(bno,page=1){
                 li += `</div>`;
                 li += `<span class="badge text-bg-primary">${cvo.modAt}</span>`;
                 li += `<button type="button" class="btn btn-outline-primary cmtModBtn" data-bs-toggle="modal" data-bs-target="#myModal">mod</button>`;
-                li += `<button type="button" class="btn btn-outline-danger">X</button>`;
+                li += `<button type="button" class="btn btn-outline-danger del">X</button>`;
                 li += `</li>`;
                 ul.innerHTML += li;
             }
@@ -136,7 +136,20 @@ document.addEventListener('click',(e)=>{
             //수정된 댓글 뿌리기 page=1
             spreadCommentList(bnoVal);
         })
+    }else if(e.target.classList.contains('del')){
+       let li = e.target.closest('li');
+       let cnoVal = li.dataset.cno;
+       deleteCommentToServer(cnoVal).then(result=>{
+        if(result =='1'){
+            alert('댓글 삭제 성공');
+            spreadCommentList(bnoVal);
+        }
+       })
+
     }
+
+
+
 });
 
 async function editCommentToServer(cmtDataMod){
@@ -152,6 +165,21 @@ async function editCommentToServer(cmtDataMod){
         const resp = await fetch(url,config);
         const result = await resp.text();
         return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function deleteCommentToServer(cno){
+    try {
+      const url = "/comment/remove/"+cno;
+      const config= {
+        method:"delete"
+
+      };
+      const resp = await fetch(url,config);
+      const result = await resp.text();
+      return result;
     } catch (error) {
         console.log(error);
     }
