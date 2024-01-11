@@ -27,6 +27,14 @@
  	 	where bno=#{bno}
 	</update>
 	
+	<update id="updateCmtCount">
+		update board b set cmt_qty =
+ 	 	(select count(bno) from comment where bno=b.bno)
+	</update>
+	<update id="updateFileCount">
+			update board b set has_file = 
+ 	 	(select count(bno) from file where bno = b.bno)
+	</update>
 	<delete id="delete" >
 		delete from board where bno=#{bno}
 	</delete>

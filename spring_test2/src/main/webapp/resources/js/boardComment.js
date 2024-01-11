@@ -59,8 +59,8 @@ function spreadCommentList(bno,page=1){
         console.log(result.cmtList);
         //댓글 모양대로 뿌리기
 
+        const ul = document.getElementById('cmtListArea');
         if(result.cmtList.length>0){
-            const ul = document.getElementById('cmtListArea');
             //댓글을 다시 뿌릴때 기존값을 삭제하면 안됨 
             //1p일 경우만 삭제
             if(page == 1){

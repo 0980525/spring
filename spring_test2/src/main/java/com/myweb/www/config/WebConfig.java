@@ -45,7 +45,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 		//사용자 지정 익셉션 처리 지정
 		
 		//파일 업로드 경로설정
-		String uploadLocation ="D:\\_myProject\\_java\\_fileUpload ";
+		String uploadLocation ="D:\\_myProject\\_java\\_fileUpload";
 		int maxFileSize= 1024*1024*20;//20M
 		int maxReqSize = maxFileSize*2; //40M
 		int fileSizeThreshold = maxFileSize; //20M	

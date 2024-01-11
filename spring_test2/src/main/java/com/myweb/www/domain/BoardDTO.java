@@ -15,9 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class BoardDTO {
 	
-	public BoardDTO(BoardDTO bdto, List<FileVO> flist2) {
-		// TODO Auto-generated constructor stub
-	}
+	
 	private BoardVO bvo;
 	private List<FileVO> flist;
 }
